@@ -25,7 +25,7 @@ export const App = () => {
   const [resultCaller , setResultCaller ] = useState(false)
   const [grade , setGrade ] = useState(null)
   const [credit , setCredit ] = useState(null)
-  const [courses , setCourses ] = useState(initialCourse)
+  const [courses , setCourses ] = useState([])
   const [gpa , setGpa ] = useState(0)
 
   const handleTotalCourse = (value) => {
@@ -36,7 +36,8 @@ export const App = () => {
     setGrade(value)
   }
   const handleCredit = (value) =>  {
-    setCredit(value)
+    const changedValue = parseFloat(value)
+    setCredit(changedValue)
   }
   const saveCourse = () => {
     setCourses([...courses , {grade : grade , credit : credit}])
@@ -49,11 +50,12 @@ export const App = () => {
   }
   const hideForm = () => {
     setFormCaller('home')
+    setResultCaller('')
   }
   const calculateGpa = () =>{
     setFormCaller('')
   setResultCaller('result')
-
+  
   const product = courses.map((data) => {return data.credit * data.grade})
   console.log('product '+ product)
   const sumOfProduct = product.reduce((total , data) => total = total + data )
@@ -63,9 +65,19 @@ export const App = () => {
   console.log('totalCredit ' + sumOfCredit)
   const gpa = sumOfProduct/sumOfCredit
   console.log('gpa ' + gpa)
-  
+  console.log(courses)
+  setGpa(gpa)  
 }
 
+  const resetValue = () => {
+    setGpa('')
+    setGrade('')
+    setCredit('')
+    setFormCaller('home')
+    setResultCaller('')
+    setTotalCourse([])
+    setCourses([])
+   }
    const getUserStars =() => {
      let i = 0;
      let stars = [];
@@ -85,10 +97,9 @@ export const App = () => {
           <h1>Fill The Form Bellow</h1> 
           <Header title1="Course_Id" title2="Grade"  title3="Credit" />
           <FormRow grades={initialGrades} saveInfo={saveCourse} changeGrade={handleGrades} changeCredit={handleCredit} selectedOption={grade} creditValue={credit} /> 
-          <FormRow grades={initialGrades} saveInfo={saveCourse} changeGrade={handleGrades} changeCredit={handleCredit} selectedOption={grade} creditValue={credit} /> 
           <Footer onCancel={hideForm} calculator={calculateGpa} />
         </div>
-          <ResultBox hide={resultCaller}  />
+          <ResultBox hide={resultCaller}  gpa={gpa} whenClicked={resetValue}/>
     </div>
   );
 }
