@@ -1,11 +1,11 @@
 import '../index.css'
 import React from 'react'
 
-export const Footer = ({ onCancel , calculator }) =>{
+export const Footer = ({ onCancel , total , id , calculator }) =>{
     return (
         <div className="footer">
-            {/* <input type="button" className="footerButton" value="Cancel" onClick={onCancel} /> */}
-            <input type="button" className="footerButton" value="Calculate" onClick={calculator} />
+            <input type="button" className="footerButton" value="Cancel" onClick={onCancel} />
+            <input disabled={id !== total ? true : false} type="button" className="footerButton" value="Calculate" onClick={calculator} />
         </div>
     )
 }

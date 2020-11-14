@@ -27,9 +27,17 @@ export const App = () => {
   const [credit , setCredit ] = useState(null)
   const [courses , setCourses ] = useState([])
   const [gpa , setGpa ] = useState(0)
+  const [errorMessage , setErrorMessage ] = useState('')
 
   const handleTotalCourse = (value) => {
-    setTotalCourse(value)
+     if (totalCourse <= 0) {
+       setErrorMessage(true)
+     } 
+     else {
+       setErrorMessage(false)
+     }
+    const changedValue = parseInt(value)
+    setTotalCourse(changedValue)
   }
 
   const handleGrades = (value) => {
@@ -39,18 +47,43 @@ export const App = () => {
     const changedValue = parseFloat(value)
     setCredit(changedValue)
   }
-  const saveCourse = () => {
-    setCourses([...courses , {grade : grade , credit : credit}])
-    setCredit(0)
-    setGrade('')
+  const removeError = () => {
+    setErrorMessage('')
+
   }
+  const saveCourse = () => {
+    if(!grade){
+      setErrorMessage('grade')
+    }
+    else if(!credit){
+      setErrorMessage('credit')
+    }
+    else{
+      setCourses([...courses , {grade : grade , credit : credit}])
+      setCredit('')
+      setGrade('')
+      setErrorMessage('')
+    }
+  }
+  console.log('arraylength ' + courses.length)
+
   const showForm = () => {
-    setFormCaller('form')
     setTotalCourse(totalCourse)
+    
+    if(!totalCourse) {
+      setErrorMessage('size')
+    }
+    else {
+      setFormCaller('form')
+      setErrorMessage('')
+    }
+    
   }
   const hideForm = () => {
     setFormCaller('home')
     setResultCaller('')
+    setTotalCourse('')
+    setCourses([])
   }
   const calculateGpa = () =>{
     setFormCaller('')
@@ -75,32 +108,25 @@ export const App = () => {
     setCredit('')
     setFormCaller('home')
     setResultCaller('')
-    setTotalCourse([])
+    setTotalCourse('')
     setCourses([])
+    setErrorMessage('')
+    
    }
-   const getUserStars =() => {
-     let i = 0;
-     let stars = [];
-     while (i < totalCourse) {
-       i++;
-       stars.push( 
-         <FormRow grades={initialGrades} saveInfo={saveCourse} changeGrade={handleGrades} changeCredit={handleCredit} selectedOption={grade} creditValue={credit} /> 
-         );
-     }
-     return stars;
-   }
+  
   return (
     <div className="container">
-      <DialogBox course={totalCourse} whenChanged={handleTotalCourse} whenClicked={showForm} hide={formCaller} /> 
+      <DialogBox course={totalCourse} whenChanged={handleTotalCourse} whenClicked={showForm} hide={formCaller} error={errorMessage}  whenKeyIsUp={removeError}/> 
         <div hidden={formCaller === 'form' ? false : true}>
-          <h1>{formCaller ? totalCourse : '' }</h1>   
+          {/* <h1>You have Selected :{formCaller ? totalCourse : '' } Courses</h1>    */}
           <h1>Fill The Form Bellow</h1> 
-          <Header title1="Course_Id" title2="Grade"  title3="Credit" />
-          <FormRow grades={initialGrades} saveInfo={saveCourse} changeGrade={handleGrades} changeCredit={handleCredit} selectedOption={grade} creditValue={credit} /> 
-          <Footer onCancel={hideForm} calculator={calculateGpa} />
+          <Header title1="Course" title2="Grade"  title3="Credit" />
+          <FormRow error={errorMessage} id={courses.length} total={totalCourse} grades={initialGrades} saveInfo={saveCourse} changeGrade={handleGrades} changeCredit={handleCredit} selectedOption={grade} creditValue={credit} /> 
+          <Footer onCancel={hideForm} calculator={calculateGpa} id={courses.length} total={totalCourse} />
         </div>
           <ResultBox hide={resultCaller}  gpa={gpa} whenClicked={resetValue}/>
     </div>
   );
 }
 
+// 
