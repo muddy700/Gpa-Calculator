@@ -91,7 +91,7 @@ export const App = () => {
   setResultCaller('result')
   
   const product = courses.map((data) => {return data.credit * data.grade})
-  console.log('product '+ product)
+  // console.log('product '+ product)
   const sumOfProduct = product.reduce((total , data) => total = total + data )
   console.log('sop ' + sumOfProduct)
   const credits = courses.map((data) => {return data.credit })
