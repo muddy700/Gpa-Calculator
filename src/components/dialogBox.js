@@ -1,14 +1,17 @@
+import { H1 , Span , Label , Button , NumberInput } from './inputs'
 import '../index.css'
 
 export const DialogBox = ({course , whenChanged , error , hide , whenKeyIsUp , whenClicked}) => {
 
+        const hider = error === 'size' ? false : true
     return (
         <div className="dialog" hidden={hide === 'home' ? false : true}>
-            <h1>Welcome</h1>
-            <label className="dialogLabel">How Many Courses Do You Have ?</label> <br /> <br />
-            <input autoFocus type="number" placeholder="Enter Total " value={course} onKeyUp={whenKeyIsUp} onChange={(e) => whenChanged(e.target.value)} />
-            <input type="button" onClick={whenClicked} value="Go" />  <br />
-            <span className="errorClass" hidden={error === 'size' ? false : true}>Number Of Courses Is required</span>
+            <H1 title="Welcome" />
+            <Label Style="dialogLabel" message="How Many Courses Do You Have ?" />
+             <br /> <br />
+            <NumberInput placeHolder="Enter Total" Value={course} hasChanged={whenChanged}  keyIsUp={whenKeyIsUp} />
+            <Button Value="Go" clicked={whenClicked} /> <br />
+            <Span message="Number Of Courses Is required" hide={hider} Style="errorClass" />
         </div>
     )
 }
@@ -17,9 +20,9 @@ export const DialogBox = ({course , whenChanged , error , hide , whenKeyIsUp , w
 export const Header = ({ title1 , title2 , title3}) => {
     return (
         <div className="heading" >
-            <h1 className="title">{title1}</h1>
-            <h1 className="title">{title2}</h1>
-            <h1 className="title">{title3}</h1>
+            <H1 title={title1} Style="title" />
+            <H1 title={title2} Style="title"/>
+            <H1 title={title3} Style="title"/>
         </div>
     )
 }
@@ -33,17 +36,21 @@ export const FormRow = ({ grades , changeGrade , id , saveInfo , changeCredit , 
     })
     
     const message = id === total ? 'Completed, Press Calculate' : 'Course ' + (id+1) 
+    const hider1 = error === 'grade' ? false : true
+    const hider2 = error === 'credit' ? false : true
+    const muter1 = id === total ? true : false
+    const muter2 = id === total ? true : false
     return(
         <div className="formRow" hidden={id === total ? true : false}>
-            <label className="row">{message} </label>
+            <Label Style="row" message={message} />
             <select value={selectedOption} className="row" onChange={(e) => changeGrade(e.target.value)}  disabled={id === total ? true : false}>
                 <option value="t">Select Grade</option>
                 {options}
             </select> <br />
-            <span className="errorClass" hidden={error === 'grade' ? false : true}>Grade Is required</span>
-            <input type="number"  className="row" placeholder="Enter credit " value={creditValue}  onChange={(e) => changeCredit(e.target.value)}  disabled={id === total ? true : false}/> <br />
-            <span className="errorClass" hidden={error === 'credit' ? false : true}>Credit Is required</span>
-            <input type="button" value="Save" className="saveButton" onClick={saveInfo} disabled={id === total ? true : false} />
+            <Span Style="errorClass" hide={hider1} message="Grade Is required" />
+            <NumberInput Style="row" placeHolder="Enter Credit" Value={creditValue} hasChanged={changeCredit} isDisabled={muter2} />
+            <Span Style="errorClass" hide={hider2}  message="Credit Is required"/>
+            <Button Value="Save" Style="saveButton" clicked={saveInfo} isDisabled={muter1} />
         </div>
     )
 }

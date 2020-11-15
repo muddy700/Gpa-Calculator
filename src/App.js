@@ -1,8 +1,8 @@
 import React , { useState } from 'react'
-import './index.css'
 import { DialogBox , Header , FormRow } from './components/dialogBox'
 import { Footer , ResultBox } from './components/footer'
-
+import { H1} from './components/inputs'
+import './index.css'
 
 export const App = () => {
 
@@ -16,10 +16,10 @@ export const App = () => {
     { name : 'F' , value : 0 }
   ]
 
-  const initialCourse = [
-    { grade : 5 , credit : 10} ,
-    { grade : 4 , credit : 10}
-  ]
+  // const initialCourse = [
+  //   { grade : 5 , credit : 10} ,
+  //   { grade : 4 , credit : 10}
+  // ]
 
   const [totalCourse , setTotalCourse ] = useState('')
   const [formCaller , setFormCaller ] = useState('home')
@@ -39,15 +39,18 @@ export const App = () => {
     setErrorMessage('')
     setGrade(value)
   }
+
   const handleCredit = (value) =>  {
     const changedValue = parseFloat(value)
     setCredit(changedValue)
     setErrorMessage('')
   }
+
   const removeError = () => {
     setErrorMessage('')
 
   }
+
   const saveCourse = () => {
     if(!grade){
       setErrorMessage('grade')
@@ -62,7 +65,6 @@ export const App = () => {
       setErrorMessage('')
     }
   }
-  console.log('arraylength ' + courses.length)
 
   const showForm = () => {
     setTotalCourse(totalCourse)
@@ -76,12 +78,14 @@ export const App = () => {
     }
     
   }
+
   const hideForm = () => {
     setFormCaller('home')
     setResultCaller('')
     setTotalCourse('')
     setCourses([])
   }
+
   const calculateGpa = () =>{
     setFormCaller('')
   setResultCaller('result')
@@ -100,7 +104,7 @@ export const App = () => {
 }
 
   const resetValue = () => {
-    setGpa('')
+    setGpa(0)
     setGrade('')
     setCredit('')
     setFormCaller('home')
@@ -113,17 +117,14 @@ export const App = () => {
   
   return (
     <div className="container">
-      <DialogBox course={totalCourse} whenChanged={handleTotalCourse} whenClicked={showForm} hide={formCaller} error={errorMessage}  whenKeyIsUp={removeError}/> 
+        <DialogBox course={totalCourse} whenChanged={handleTotalCourse} whenClicked={showForm} hide={formCaller} error={errorMessage}  whenKeyIsUp={removeError}/> 
         <div hidden={formCaller === 'form' ? false : true}>
-          {/* <h1>You have Selected :{formCaller ? totalCourse : '' } Courses</h1>    */}
-          <h1>Fill The Form Bellow</h1> 
-          <Header title1="Course" title2="Grade"  title3="Credit" />
-          <FormRow error={errorMessage} id={courses.length} total={totalCourse} grades={initialGrades} saveInfo={saveCourse} changeGrade={handleGrades} changeCredit={handleCredit} selectedOption={grade} creditValue={credit} /> 
-          <Footer onCancel={hideForm} calculator={calculateGpa} id={courses.length} total={totalCourse} />
+            <H1 title="Fill The Form Bellow" /> 
+            <Header title1="Course" title2="Grade"  title3="Credit" />
+            <FormRow error={errorMessage} id={courses.length} total={totalCourse} grades={initialGrades} saveInfo={saveCourse} changeGrade={handleGrades} changeCredit={handleCredit} selectedOption={grade} creditValue={credit} /> 
+            <Footer onCancel={hideForm} calculator={calculateGpa} id={courses.length} total={totalCourse} />
         </div>
-          <ResultBox hide={resultCaller}  gpa={gpa} whenClicked={resetValue}/>
+        <ResultBox hide={resultCaller}  gpa={gpa} whenClicked={resetValue}/>
     </div>
   );
 }
-
-// 
