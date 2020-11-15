@@ -3,6 +3,7 @@ import './index.css'
 import { DialogBox , Header , FormRow } from './components/dialogBox'
 import { Footer , ResultBox } from './components/footer'
 
+
 export const App = () => {
 
   const initialGrades = [
@@ -30,22 +31,18 @@ export const App = () => {
   const [errorMessage , setErrorMessage ] = useState('')
 
   const handleTotalCourse = (value) => {
-     if (totalCourse <= 0) {
-       setErrorMessage(true)
-     } 
-     else {
-       setErrorMessage(false)
-     }
     const changedValue = parseInt(value)
     setTotalCourse(changedValue)
   }
 
   const handleGrades = (value) => {
+    setErrorMessage('')
     setGrade(value)
   }
   const handleCredit = (value) =>  {
     const changedValue = parseFloat(value)
     setCredit(changedValue)
+    setErrorMessage('')
   }
   const removeError = () => {
     setErrorMessage('')

@@ -13,7 +13,7 @@ export const Footer = ({ onCancel , total , id , calculator }) =>{
 export const ResultBox = ({hide , gpa , whenClicked }) => {
     return(
         <div className="dialog" hidden={hide === 'result' ? false : true}>
-            <h1 style={{paddingTop : 40}}>{gpa >=2 ? 'Pass!.Your GPA Is: ' + gpa : 'Fail!!.Your GPA Is: ' + gpa}</h1>
+            <h1 style={{paddingTop : 40}}>{gpa >=2 ? 'Pass!.Your GPA Is: ' + gpa.toFixed(1) : 'Fail!!.Your GPA Is: ' + gpa}</h1>
             <input type="button"  value="Exit" onClick={whenClicked} />
         </div>
     )

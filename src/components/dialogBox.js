@@ -6,7 +6,7 @@ export const DialogBox = ({course , whenChanged , error , hide , whenKeyIsUp , w
         <div className="dialog" hidden={hide === 'home' ? false : true}>
             <h1>Welcome</h1>
             <label className="dialogLabel">How Many Courses Do You Have ?</label> <br /> <br />
-            <input type="number" placeholder="Enter Total " value={course} onKeyUp={whenKeyIsUp} onChange={(e) => whenChanged(e.target.value)} />
+            <input autoFocus type="number" placeholder="Enter Total " value={course} onKeyUp={whenKeyIsUp} onChange={(e) => whenChanged(e.target.value)} />
             <input type="button" onClick={whenClicked} value="Go" />  <br />
             <span className="errorClass" hidden={error === 'size' ? false : true}>Number Of Courses Is required</span>
         </div>
