@@ -8,7 +8,7 @@ export const DialogBox = ({course , whenChanged , error , hide , whenKeyIsUp , w
         <div className="dialog" hidden={hide === 'home' ? false : true}>
             <H1 title="Welcome" />
             <Label Style="dialogLabel" message="How Many Courses Do You Have ?" />
-             <br /> <br />
+            <br /> <br />
             <NumberInput placeHolder="Enter Total" Value={course} hasChanged={whenChanged}  keyIsUp={whenKeyIsUp} />
             <Button Value="Go" clicked={whenClicked} /> <br />
             <Span message="Number Of Courses Is required" hide={hider} Style="errorClass" />
@@ -40,6 +40,7 @@ export const FormRow = ({ grades , changeGrade , id , saveInfo , changeCredit , 
     const hider2 = error === 'credit' ? false : true
     const muter1 = id === total ? true : false
     const muter2 = id === total ? true : false
+
     return(
         <div className="formRow" hidden={id === total ? true : false}>
             <Label Style="row" message={message} />
